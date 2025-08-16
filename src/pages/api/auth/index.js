@@ -11,7 +11,7 @@ export default function index(req, res) {
   }
 
   const state = generateNonce();
-  const redirectUri = `${process.env.FORWARDING_ADDRESS}/api/auth/callback`;
+  const redirectUri = `${process.env.FORWARDING_ADDRESS}/api/auth/callBack`;
 
   const installUrl = `https://${shop}/admin/oauth/authorize?client_id=${process.env.SHOPIFY_API_KEY}&scope=${process.env.SCOPES}&state=${state}&redirect_uri=${redirectUri}`;
 

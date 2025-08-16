@@ -3,7 +3,8 @@ import connectDB from "../../../lib/connectDB";
 import Shop from "../../../lib/models/shopSchema"
 import { injectModelViewer } from "../../../lib/controlles/injectModelViewer"
 
-export default async function callback(req, res) {
+export default async function callBack(req, res) {
+  console.log("hola")
   await connectDB();
 
   const { shop, code } = req.query;
@@ -36,7 +37,7 @@ export default async function callback(req, res) {
 
     await injectModelViewer(shop, accessToken);
 
-    res.redirect("/");
+    res.send({message:"hello"})
   } catch (error) {
     console.error("❌ Error exchanging token:", error.response?.data || error.message);
     res.status(500).send("Error exchanging token");
