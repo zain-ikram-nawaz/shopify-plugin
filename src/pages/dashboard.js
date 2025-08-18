@@ -32,7 +32,14 @@ export default function Dashboard() {
   //   setViewMode("list");
   // };
 
-
+  // Handle new product creation
+  const handleAddProduct = (newProduct) => {
+    setProducts([...products, {
+      ...newProduct,
+      id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
+    }]);
+    setViewMode("list");
+  };
 useEffect(()=>{
 const data = async()=>{
   const response = await fetch("/api/product/getAll");
@@ -94,6 +101,13 @@ data()
           />
         )}
 
+        {(viewMode === "add" || viewMode === "edit") && (
+          <ProductForm
+            product={viewMode === "edit" ? selectedProduct : null}
+            onSubmit={handleAddProduct }
+            onCancel={() => setViewMode("list")}
+          />
+        )}
 
         {viewMode === "preview" && selectedProduct && (
           <ProductPreview
