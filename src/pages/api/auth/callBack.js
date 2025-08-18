@@ -37,7 +37,7 @@ export default async function callBack(req, res) {
 
     await injectModelViewer(shop, accessToken);
 
-      res.redirect("/dashboard");
+      res.redirect("/instructions");
   } catch (error) {
     console.error("❌ Error exchanging token:", error.response?.data || error.message);
     res.status(500).send("Error exchanging token");
