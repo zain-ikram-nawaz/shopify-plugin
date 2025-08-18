@@ -1,5 +1,5 @@
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 // Cloudinary config using .env.local
 cloudinary.config({
@@ -10,7 +10,7 @@ cloudinary.config({
 
 // Product images storage
 const productStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
     folder: "product",
     allowed_formats: ["jpg", "jpeg", "png", "gif"],
@@ -20,16 +20,11 @@ const productStorage = new CloudinaryStorage({
 
 // 3D models storage
 const uploadModelStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
+  cloudinary,
   params: {
     folder: "shopify_models",
     allowed_formats: ["glb", "usdz"],
   },
 });
 
-// ✅ Export both storages and cloudinary instance
-module.exports = {
-  cloudinary,
-  productStorage,
-  uploadModelStorage,
-};
+export { cloudinary, productStorage, uploadModelStorage };

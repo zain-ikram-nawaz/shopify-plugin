@@ -1,5 +1,5 @@
 // pages/dashboard/index.js
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProductList from "../components/ProductList"
 import ProductForm from "../components/ProductForm";
 import ProductPreview from "../components/ProductPreview";
@@ -17,30 +17,33 @@ export default function Dashboard() {
   };
 
   // Handle product deletion
-  const handleDeleteProduct = (id) => {
-    setProducts(products.filter(product => product.id !== id));
-    if (selectedProduct && selectedProduct.id === id) {
-      setSelectedProduct(null);
-    }
-  };
+  // const handleDeleteProduct = (id) => {
+  //   setProducts(products?.filter(product => product.id !== id));
+  //   if (selectedProduct && selectedProduct.id === id) {
+  //     setSelectedProduct(null);
+  //   }
+  // };
 
   // Handle product update
-  const handleUpdateProduct = (updatedProduct) => {
-    setProducts(products.map(product =>
-      product.id === updatedProduct.id ? updatedProduct : product
-    ));
-    setViewMode("list");
-  };
+  // const handleUpdateProduct = (updatedProduct) => {
+  //   setProducts(products.map(product =>
+  //     product.id === updatedProduct.id ? updatedProduct : product
+  //   ));
+  //   setViewMode("list");
+  // };
 
-  // Handle new product creation
-  const handleAddProduct = (newProduct) => {
-    setProducts([...products, {
-      ...newProduct,
-      id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
-    }]);
-    setViewMode("list");
-  };
 
+useEffect(()=>{
+const data = async()=>{
+  const response = await fetch("/api/product/getAll");
+const data = await response.json();
+ if (data.success) {
+  // console.log(data)
+          setProducts(data); // ✅ ye turant state update karega
+        }
+}
+data()
+},[])
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-green-700 text-white p-4 shadow-md">
@@ -63,7 +66,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <StatsCard
             title="Total Products"
-            value={products.length}
+            value={products?.length}
             icon="📦"
           />
           <StatsCard
@@ -83,7 +86,7 @@ export default function Dashboard() {
           <ProductList
             products={products}
             onSelect={handleSelectProduct}
-            onDelete={handleDeleteProduct}
+            // onDelete={handleDeleteProduct}
             onEdit={(product) => {
               setSelectedProduct(product);
               setViewMode("edit");
@@ -91,13 +94,6 @@ export default function Dashboard() {
           />
         )}
 
-        {(viewMode === "add" || viewMode === "edit") && (
-          <ProductForm
-            product={viewMode === "edit" ? selectedProduct : null}
-            onSubmit={viewMode === "add" ? handleAddProduct : handleUpdateProduct}
-            onCancel={() => setViewMode("list")}
-          />
-        )}
 
         {viewMode === "preview" && selectedProduct && (
           <ProductPreview

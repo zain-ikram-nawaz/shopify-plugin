@@ -4,7 +4,7 @@ import Shop from "../../../lib/models/shopSchema"
 import { injectModelViewer } from "../../../lib/controlles/injectModelViewer"
 
 export default async function callBack(req, res) {
-  console.log("hola")
+  // console.log("hola")
   await connectDB();
 
   const { shop, code } = req.query;
