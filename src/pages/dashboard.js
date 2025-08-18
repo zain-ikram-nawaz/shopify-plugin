@@ -16,30 +16,8 @@ export default function Dashboard() {
     setViewMode("preview");
   };
 
-  // Handle product deletion
-  // const handleDeleteProduct = (id) => {
-  //   setProducts(products?.filter(product => product.id !== id));
-  //   if (selectedProduct && selectedProduct.id === id) {
-  //     setSelectedProduct(null);
-  //   }
-  // };
 
-  // Handle product update
-  // const handleUpdateProduct = (updatedProduct) => {
-  //   setProducts(products.map(product =>
-  //     product.id === updatedProduct.id ? updatedProduct : product
-  //   ));
-  //   setViewMode("list");
-  // };
-
-  // Handle new product creation
-  const handleAddProduct = (newProduct) => {
-    setProducts([...products, {
-      ...newProduct,
-      id: products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1
-    }]);
-    setViewMode("list");
-  };
+  // Handle new product creati
 useEffect(()=>{
 const data = async()=>{
   const response = await fetch("/api/product/getAll");
@@ -93,7 +71,6 @@ data()
           <ProductList
             products={products}
             onSelect={handleSelectProduct}
-            // onDelete={handleDeleteProduct}
             onEdit={(product) => {
               setSelectedProduct(product);
               setViewMode("edit");

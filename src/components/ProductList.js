@@ -5,7 +5,7 @@ import { useState } from "react";
 import EditProductModal from "./EditProductModal";
 
 
-export default function ProductList({ products, onSelect, onDelete, onEdit }) {
+export default function ProductList({ products, onSelect}) {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -19,8 +19,6 @@ export default function ProductList({ products, onSelect, onDelete, onEdit }) {
     if (!res.ok) throw new Error(data.error || "Delete failed");
 
     alert("Product deleted successfully!");
-    // Update UI
-    // setProducts((prev) => prev.filter((p) => p.id !== id));
   } catch (err) {
     alert(err.message);
   }
@@ -31,8 +29,6 @@ export default function ProductList({ products, onSelect, onDelete, onEdit }) {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold">Your 3D Products</h2>
         <SearchBar
-        // value={searchTerm}
-        // onChange={setSearchTerm}
         />
       </div>
 
@@ -92,7 +88,6 @@ export default function ProductList({ products, onSelect, onDelete, onEdit }) {
         product={selectedProduct}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onUpdate={handleUpdate}
       /> : ""}
     </div>
   );
