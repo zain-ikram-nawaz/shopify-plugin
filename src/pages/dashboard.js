@@ -104,7 +104,6 @@ data()
         {(viewMode === "add" || viewMode === "edit") && (
           <ProductForm
             product={viewMode === "edit" ? selectedProduct : null}
-            onSubmit={handleAddProduct }
             onCancel={() => setViewMode("list")}
           />
         )}

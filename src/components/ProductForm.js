@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { FiUpload, FiX } from "react-icons/fi";
 
-export default function ProductForm({ product, onSubmit, onCancel }) {
+export default function ProductForm({ product, onCancel }) {
   const [formData, setFormData] = useState({
     title: "",
     body_html: "",
@@ -80,7 +80,6 @@ export default function ProductForm({ product, onSubmit, onCancel }) {
         throw new Error(result.error || 'Failed to save product');
       }
 
-      onSubmit(result.product);
       alert("submitted")
     } catch (err) {
       setError(err.message);
@@ -92,6 +91,15 @@ export default function ProductForm({ product, onSubmit, onCancel }) {
 
   return (
   <div className="bg-white rounded-lg shadow-md p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-bold">3D Preview: {product?.title}</h2>
+        <button
+          onClick={onCancel}
+          className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+        >
+          Back to Products
+        </button>
+      </div>
   <h2 className="text-xl font-bold mb-4">
     {product ? "Edit Product" : "Add New Product"}
   </h2>
