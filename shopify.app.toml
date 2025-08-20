@@ -1,0 +1,24 @@
+name = "Shopify Plugin Six"
+client_id = "${SHOPIFY_API_KEY}"
+application_url = "${FORWARDING_ADDRESS}"
+embedded = true
+handle = "shopify-plugin"
+
+[access_scopes]
+scopes = "${SCOPES}"
+
+[auth]
+redirect_urls = [
+  "${FORWARDING_ADDRESS}/api/auth/callBack"
+]
+
+[webhooks]
+api_version = "2024-01"
+
+[[webhooks.subscriptions]]
+topics = [ "app/uninstalled" ]
+uri = "/webhooks"
+
+[build]
+automatically_update_urls_on_dev = false
+include_config_on_deploy = true
