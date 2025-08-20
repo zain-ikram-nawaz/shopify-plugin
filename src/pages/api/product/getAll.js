@@ -11,7 +11,7 @@ export default async function getAll(req, res) {
     console.error(err);
     return res.status(500).json({ error: "DB connection failed" });
   });
-
+// const shop = "3d-model-project.myshopify.com"
   const shop = req.cookies.shop_domain // 🔑 Tumhare shop ka naam
 
   try {

@@ -1,16 +1,14 @@
 // pages/dashboard/index.js
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProductList from "../components/ProductList"
 import ProductForm from "../components/ProductForm";
 import ProductPreview from "../components/ProductPreview";
 import StatsCard from "../components/StatsCard";
 
+
 export default function Dashboard() {
   const [viewMode, setViewMode] = useState("list"); // 'list', 'add', 'edit', 'preview'
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [products, setProducts] = useState([]);
-
-  // Handle product selection
   const handleSelectProduct = (product) => {
     setSelectedProduct(product);
     setViewMode("preview");
@@ -18,17 +16,10 @@ export default function Dashboard() {
 
 
   // Handle new product creati
-useEffect(()=>{
-const data = async()=>{
-  const response = await fetch("/api/product/getAll");
-const data = await response.json();
- if (data.success) {
-  // console.log(data)
-          setProducts(data); // ✅ ye turant state update karega
-        }
-}
-data()
-},[])
+
+// if(products.loading){
+//   return 
+// }
   return (
     <div className="min-h-screen bg-gray-100">
       <header className="bg-green-700 text-white p-4 shadow-md">
@@ -51,7 +42,6 @@ data()
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <StatsCard
             title="Total Products"
-            value={products?.length}
             icon="📦"
           />
           <StatsCard
@@ -69,7 +59,6 @@ data()
         {/* Conditional Rendering based on view mode */}
         {viewMode === "list" && (
           <ProductList
-            products={products}
             onSelect={handleSelectProduct}
             onEdit={(product) => {
               setSelectedProduct(product);

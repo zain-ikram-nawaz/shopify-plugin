@@ -5,6 +5,7 @@ import { getTokenByShop } from "../../../lib/controlles/getTokenByShop";
 export default async function handler(req, res) {
   const { id } = req.query;
   const shop = req.cookies.shop_domain
+  // const shop = "3d-model-project.myshopify.com"
   // console.log(id,"id")
   try {
     const accessToken = await getTokenByShop(shop);

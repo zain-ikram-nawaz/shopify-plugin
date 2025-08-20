@@ -1,20 +1,25 @@
 // pages/dashboard/components/ProductList.js
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import SearchBar from "./SearchBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import EditProductModal from "./EditProductModal";
+import { useSelector,useDispatch } from "react-redux";
+import { fetchProducts } from "@/redux/slice/data";
 
 
-export default function ProductList({ products, onSelect}) {
+export default function ProductList({onSelect}) {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+   const dispatch = useDispatch()
+    const { products, loading, error } = useSelector((state) => state);
+const data = products?.products?.products || []
   const handleDelete =async (updatedProduct) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
 
   try {
     const res = await fetch(`/api/product/deleteProduct/${updatedProduct}`, { method: "DELETE" });
     const data = await res.json();
+    await dispatch(fetchProducts())
 
     if (!res.ok) throw new Error(data.error || "Delete failed");
 
@@ -23,6 +28,9 @@ export default function ProductList({ products, onSelect}) {
     alert(err.message);
   }
   };
+useEffect(()=>{
+dispatch(fetchProducts())
+},[dispatch])
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
@@ -32,13 +40,13 @@ export default function ProductList({ products, onSelect}) {
         />
       </div>
 
-      {products?.products?.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No products found. Add your first 3D product to get started.
-        </div>
-      ) : (
+      {products?.loading ? (
+        <div class="flex justify-center items-center h-64">
+   <div class="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+</div>
+      ): (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {products?.products?.map(product => (
+          {data?.map(product => (
             <div key={product?.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
               <div className="flex items-start space-x-4">
                 <img

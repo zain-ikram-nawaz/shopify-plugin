@@ -51,7 +51,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "All fields are required" });
     }
 // const shop = "3d-model-project.myshopify.com"
-    const shop = req.cookies.shop_domain// 🟢 From cookie (same as Express)
+    const shop = req.cookies.shop_domain  // 🟢 From cookie (same as Express)
 
     try {
       const accessToken = await getTokenByShop(shop);

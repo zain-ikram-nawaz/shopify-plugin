@@ -9,8 +9,8 @@ export default async function handler(req, res) {
   try {
     const { id } = req.query;
     if (!id) return res.status(400).json({ error: "Product ID required" });
-
-     const shop = req.cookies.shop_domain // e.g. 3d-model-project.myshopify.com
+const shop = req.cookies.shop_domain
+    //  const shop = "3d-model-project.myshopify.com";// e.g. 3d-model-project.myshopify.com
      const accessToken = await getTokenByShop(shop);
         if (!accessToken) return res.status(404).json({ error: "Token not found" });
 

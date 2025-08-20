@@ -42,11 +42,11 @@ export default async function handler(req, res) {
   finalUpload(req, res, async (err) => {
     if (err) return res.status(500).json({ error: err.message });
     const { updateProduct } = req.query;
-    console.log(updateProduct, "id")
+    // console.log(updateProduct, "id")
     const { title, body_html, vendor, product_type, price } = req.body;
     if (!updateProduct) return res.status(400).json({ error: "Product ID required" });
-
-    const shop = req.cookies.shop_domain
+// const shop = req.cookies.shop_domain
+  // const shop = "3d-model-project.myshopify.com"
 
     try {
       const accessToken = await getTokenByShop(shop);
